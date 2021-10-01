@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Room</title>
-    <link rel="stylesheet" th:href ="@{../static/css/main.css}">
+    <link rel="stylesheet" th:href ="@{/css/main.css}">
     <!-- https://cdnjs.com/libraries/sockjs-client -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
     <!-- https://cdnjs.com/libraries/stomp.js/ -->
@@ -14,7 +14,7 @@
 <div id="chat-container">
     <div id="chat-header">
         <div class="user-container">
-            <span id="username" th:utext=""${username}></span>
+            <span id="username" th:utext="${username}"></span>
             <a th:href="@{/logout}">Logout</a>
         </div>
         <h3>Room</h3>
@@ -30,7 +30,7 @@
     </div>
 </form>
 </div>
-<script th:src="@{../static/js/main.js}"
+<script th:src="@{/js/main.js}"></script>
 
 
 </body>

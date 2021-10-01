@@ -20,7 +20,7 @@ connect();
 function onConnected(){
     //subcribe to the public topic
     stompClient.subscribe('/topic/publicChatRoom', onMessageReceived)
-    stompClient.send("/app/chat.user"), {}, JSON.stringify({sender: username, type: 'JOIN'})
+    stompClient.send("/app/chat.addUser", {}, JSON.stringify({sender: username, type: 'JOIN'}))
     connectingElement.classList.add('hidden')
 }
 function onError(){
@@ -30,22 +30,22 @@ function onError(){
 function sendMessage(){
     var messageContent = messageInput.value.trim()
     if(messageContent && stompClient){
-        var  chatMesage = {
+        var  chatMessage = {
             sender:username,
             content: messageInput.value,
             type: 'CHAT'
         }
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMesage))
+        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage))
         messageInput.value = ''
     }
     event.preventDefault();
 }
-function onMessageReeeived(payload){
+function onMessageReceived(payload){
     var message = JSON.parse(payload.body);
     var messageElement = document.createElement('li')
     if(message.type === 'JOIN'){
         messageElement.classList.add('event-message')
-        message.content= message.sender + 'joined'
+        message.content= message.sender + ' joined'
 
     }else if(message.type === 'LEAVE'){
         messageElement.classList.add('event-message');
@@ -54,7 +54,7 @@ function onMessageReeeived(payload){
         messageElement.classList.add('chat-message');
         var usernameElement = document.createElement('strong');
         usernameElement.classList.add('nickname');
-        var usernameText = document.createTextNode(message.sender);
+
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
